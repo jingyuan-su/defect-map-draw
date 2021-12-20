@@ -72,9 +72,9 @@
                     
                     for (var item in Object.values(sampling_coord)){
                         // console.log(typeof(sampling_coord[item]));
-                        var index_defx = parseInt(sampling_edge['def_yl'])+1  - parseInt(sampling_coord[item]['y']);
-                        var index_defy = Math.abs(parseInt(sampling_edge['def_xl']))+1  + parseInt(sampling_coord[item]['x']);
-                        map.strokeRect(index_defy *10, index_defx * 10, 10, 10);
+                        var index_defy = parseInt(sampling_edge['def_yl'])+1  - parseInt(sampling_coord[item]['y']);
+                        var index_defx = Math.abs(parseInt(sampling_edge['def_xl']))+1  + parseInt(sampling_coord[item]['x']);
+                        map.strokeRect(index_defx *10, index_defy * 10, 10, 10);
                     }
                 }
                 // draw();
