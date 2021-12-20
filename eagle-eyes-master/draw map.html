@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript">
+            window.onload = function(){
+                var connection = new WebSocket("ws://localhost:8765/");
+                console.log("start");
+                connection.onopen = function(){
+                    connection.send("pls send me data");
+                };
+
+                connection.onmessage = function(event){
+                    var received_data = event.data || Window.event.data;
+                    draw(received_data);
+                    connection.close();
+                };
+
+                connection.onclose = function(event){
+                    console.log("websocket close");
+                };
+
+                connection.onerror = function(event){
+                    console.error("Websocket error observed:", event);
+                };
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id = "defectmap" width = "6000" height = "6000"></canvas>
+        <script>
+                function draw(mydata){
+                    raw_data = JSON.parse(mydata);
+                    for(var item in raw_data){
+                        // sampling_coord = JSON.parse(raw_data['sampling_coord']);
+                        // sampling_edge = JSON.parse(raw_data['sampling_edge']);
+                        sampling_coord = JSON.parse(raw_data['sampling_coor']);
+                        sampling_edge = raw_data['sampling_edge'];
+                    }
+
+                    canvas = document.getElementById("defectmap");
+                    var map = canvas.getContext("2d");
+
+                    // map.beginPath();
+                    // map.arc(200, 200, 200, -Math.PI, Math.PI, false);
+                    // map.closePath();
+                    // map.stroke();
+
+                    map.translate(1000, 1000);
+                    map.lineWidth = 0.1;
+                    // for (var i = 0; i < 6; i++){
+                    //     for (var j = 0; j < 6; j++){
+                    //         map.strokeRect(j * 10,i * 10, 10, 10);
+                    //     }
+                    // }
+
+                    
+                    // With Worksheets("defect")
+                    //     def_xl = WorksheetFunction.Min(Range("b277:b" & dfrow_end))
+                    //     def_xr = WorksheetFunction.Max(Range("b277:b" & dfrow_end))
+                    //     def_yu = WorksheetFunction.Min(Range("c277:c" & dfrow_end))
+                    //     def_yl = WorksheetFunction.Max(Range("c277:c" & dfrow_end))
+                    // End With
+                    
+                    // VBA map
+                    // For Each cellx In Worksheets("defect").Range("b277:b" & dfrow_end)
+                    //     index_defx = def_yl + 1 - cellx.Offset(0, 1).Value
+                    //     index_defy = Abs(def_xl) + 1 + cellx.Value
+                    //     Worksheets("com map").cells(index_defx + 10, index_defy + 10).Value = "D"
+                    // Next
+
+
+                    
+                    for (var item in Object.values(sampling_coord)){
+                        // console.log(typeof(sampling_coord[item]));
+                        var index_defx = parseInt(sampling_edge['def_yl'])+1  - parseInt(sampling_coord[item]['y']);
+                        var index_defy = Math.abs(parseInt(sampling_edge['def_xl']))+1  + parseInt(sampling_coord[item]['x']);
+                        map.strokeRect(index_defx * 10, index_defy *10, 10, 10);
+                    }
+                }
+                // draw();
+        </script>
+    </body>
+</html>
