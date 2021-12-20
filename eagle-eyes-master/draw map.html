@@ -47,29 +47,7 @@
 
                     map.translate(100, 100);
                     map.lineWidth = 0.1;
-                    // for (var i = 0; i < 6; i++){
-                    //     for (var j = 0; j < 6; j++){
-                    //         map.strokeRect(j * 10,i * 10, 10, 10);
-                    //     }
-                    // }
 
-                    
-                    // With Worksheets("defect")
-                    //     def_xl = WorksheetFunction.Min(Range("b277:b" & dfrow_end))
-                    //     def_xr = WorksheetFunction.Max(Range("b277:b" & dfrow_end))
-                    //     def_yu = WorksheetFunction.Min(Range("c277:c" & dfrow_end))
-                    //     def_yl = WorksheetFunction.Max(Range("c277:c" & dfrow_end))
-                    // End With
-                    
-                    // VBA map
-                    // For Each cellx In Worksheets("defect").Range("b277:b" & dfrow_end)
-                    //     index_defx = def_yl + 1 - cellx.Offset(0, 1).Value
-                    //     index_defy = Abs(def_xl) + 1 + cellx.Value
-                    //     Worksheets("com map").cells(index_defx + 10, index_defy + 10).Value = "D"
-                    // Next
-
-
-                    
                     for (var item in Object.values(sampling_coord)){
                         // console.log(typeof(sampling_coord[item]));
                         var index_defy = parseInt(sampling_edge['def_yl'])+1  - parseInt(sampling_coord[item]['y']);
