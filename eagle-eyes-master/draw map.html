@@ -26,7 +26,7 @@
         </script>
     </head>
     <body>
-        <canvas id = "defectmap" width = "6000" height = "6000"></canvas>
+        <canvas id = "defectmap" width = "1000" height = "1000"></canvas>
         <script>
                 function draw(mydata){
                     raw_data = JSON.parse(mydata);
@@ -45,7 +45,7 @@
                     // map.closePath();
                     // map.stroke();
 
-                    map.translate(1000, 1000);
+                    map.translate(100, 100);
                     map.lineWidth = 0.1;
                     // for (var i = 0; i < 6; i++){
                     //     for (var j = 0; j < 6; j++){
@@ -74,7 +74,7 @@
                         // console.log(typeof(sampling_coord[item]));
                         var index_defx = parseInt(sampling_edge['def_yl'])+1  - parseInt(sampling_coord[item]['y']);
                         var index_defy = Math.abs(parseInt(sampling_edge['def_xl']))+1  + parseInt(sampling_coord[item]['x']);
-                        map.strokeRect(index_defx * 10, index_defy *10, 10, 10);
+                        map.strokeRect(index_defy *10, index_defx * 10, 10, 10);
                     }
                 }
                 // draw();
