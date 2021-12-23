@@ -18,7 +18,7 @@ async def socket_server(websocket,port):
     await websocket.send(data)
 
 
-start_server = websockets.serve(socket_server,'localhost',8765)
+start_server = websockets.serve(socket_server,'localhost',8766)
 '''
 摘自 官方文档
 loop.run_until_complete(future)

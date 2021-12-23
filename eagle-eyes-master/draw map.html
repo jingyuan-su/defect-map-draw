@@ -3,7 +3,7 @@
     <head>
         <script type="text/javascript">
             window.onload = function(){
-                var connection = new WebSocket("ws://localhost:8765/");
+                var connection = new WebSocket("ws://localhost:8766/");
                 console.log("start");
                 connection.onopen = function(){
                     connection.send("pls send me data");
@@ -52,10 +52,19 @@
                         // console.log(typeof(sampling_coord[item]));
                         var index_defy = parseInt(sampling_edge['def_yl'])+1  - parseInt(sampling_coord[item]['y']);
                         var index_defx = Math.abs(parseInt(sampling_edge['def_xl']))+1  + parseInt(sampling_coord[item]['x']);
-                        map.strokeRect(index_defx *10, index_defy * 10, 10, 10);
+                        x_pixel = 2490/352.73;
+                        y_pixel = 2260/352.73;
+                        map.strokeRect(index_defx *x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
+                        map.save();
+                        map.translate(index_defx *x_pixel, index_defy * y_pixel);
+                        // x size = 9.440000 um 0.03
+                        // y size = 7.280000 um 0.02
+                        // XREL = 1.7531200000e+03  4.96 pixel
+                        // YREL = 5.0608000000e+02  14.34 pixel
+                        map.strokeRect(4.96, 14.34, 0.03, 0.02);
+                        map.restore();
                     }
                 }
-                // draw();
         </script>
     </body>
 </html>

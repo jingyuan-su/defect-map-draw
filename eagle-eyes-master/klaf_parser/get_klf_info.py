@@ -186,7 +186,7 @@ async def echo(websocket):
         # await websocket.send(json.dumps(mysamping_edge))
 
 async def main():
-    async with websockets.serve(echo, 'localhost', 8765) as websocket:
+    async with websockets.serve(echo, 'localhost', 8766) as websocket:
         await asyncio.Future()
 
 
