@@ -54,9 +54,9 @@
                         var index_defx = Math.abs(parseInt(sampling_edge['def_xl']))+1  + parseInt(sampling_coord[item]['x']);
                         x_pixel = 2490/352.73;
                         y_pixel = 2260/352.73;
-                        map.strokeRect(index_defx *x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
+                        map.strokeRect(index_defx * x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
                         map.save();
-                        map.translate(index_defx *x_pixel, index_defy * y_pixel + index_defx);
+                        map.translate(index_defx * x_pixel, index_defy * y_pixel);
                         // x size = 9.440000 um 0.03
                         // y size = 7.280000 um 0.02
                         // XREL = 1.7531200000e+03  4.96 pixel
