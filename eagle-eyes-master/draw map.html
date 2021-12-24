@@ -58,7 +58,10 @@
                         //draw die pitch
                         map.strokeRect(index_defx * x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
                         //map.save();
-                        //draw defect point and for xREL and yREL
+                        //draw defect point
+                        //x intra die defect position relative to the lower left corner of the die. For this
+                        //to be meaningful, XINDEX and YINDEX fields must be used. The corresponding
+                        //field in the DefectList will be a Float.
                         map.strokeRect(index_defx * x_pixel + 4.96, index_defy * y_pixel + y_pixel - 1.43, 0.03, 0.02);
                         console.log(index_defy * y_pixel - y_pixel * 2);
                         // x size = 9.440000 um 0.03
