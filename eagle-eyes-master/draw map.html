@@ -31,9 +31,11 @@
                 function draw(mydata){
                     raw_data = JSON.parse(mydata);
                     for(var item in raw_data){
-                        sampling_coord = JSON.parse(raw_data['sampling_coor']);
-                        defect_coord = JSON.parse(raw_data['defect_coor']);
-                        sampling_edge = raw_data['sampling_edge'];
+                        var sampling_coord = JSON.parse(raw_data['sampling_coord']);
+                        var defect_coord = JSON.parse(raw_data['defect_coord']);
+                        var sampling_edge = raw_data['sampling_edge'];
+                        var die_pitch_x = raw_data['die_pitch_x'];
+                        var die_pitch_y = raw_data['die_pitch_y'];
                     }
                     
                     canvas = document.getElementById("defectmap");
@@ -45,15 +47,15 @@
                     // map.stroke();
 
                     map.translate(100, 100);
-                    map.lineWidth = 0.1;
+                    map.lineWidth = 0.05;
 
                     for (var item in Object.values(sampling_coord)){
                         // console.log(typeof(sampling_coord[item]));
                         var index_defy = parseInt(sampling_edge['def_yl'])+1  - parseInt(sampling_coord[item]['y']);
                         var index_defx = Math.abs(parseInt(sampling_edge['def_xl']))+1  + parseInt(sampling_coord[item]['x']);
                         //1 piexl = 352.73 um,convert to pixel from um for width and height
-                        x_pixel = 2490/352.73;
-                        y_pixel = 2260/352.73;
+                        x_pixel = parseFloat(die_pitch_x)/352.73;
+                        y_pixel = parseFloat(die_pitch_y)/352.73;
                         //draw die pitch
                         map.strokeRect(index_defx * x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
                         map.save();

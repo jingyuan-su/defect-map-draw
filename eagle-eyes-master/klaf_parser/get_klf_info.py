@@ -46,8 +46,10 @@ def detect_new_file(src_path):
                     dir_name = os.path.split(os.path.split(root)[0])[-1]
                     logger.info("found klarf: " + filename)
                     logger.info('...in ' + dir_name)
-                    scan_sampling, sampling_edge, defect_sampling = parser_klf(root, filename, logger)
-                    return scan_sampling, sampling_edge, defect_sampling
+                    #scan_sampling, sampling_edge, defect_sampling = parser_klf(root, filename, logger)
+                    #return scan_sampling, sampling_edge, defect_sampling
+                    klarf_reading = parser_klf(root, filename, logger)
+                    return klarf_reading,logger
     except Exception as e:
         logger.error(str(e))
         return None
@@ -126,16 +128,19 @@ def parser_klf(src_path, filename, logger):
         wafer_info['Setupid'] = SetupID_str
         wafer_info['Notch_direction'] = Wafer_notch_direction
         wafer_info['SampleCenter'] = Sample_center_location
-        wafer_info['Diepitch'] = Die_pitch
+        wafer_info['Diepitch_x'] = float(Die_pitch.strip().split(' ')[0])
+        wafer_info['Diepitch_y'] = float(Die_pitch.strip().split(' ')[1])
         wafer_info['Sample_count'] = sample_count
         wafer_info['wafer_tiff'] = Wafer_Tiff_dict
         wafer_info['samplining_coordinate'] = Sample_plan_coordinate
         wafer_info['defect_coordinate'] = Defect_list_coordinate
-
+        wafer_info['sample_edge'] = sample_edge
+        
+  
         #return wafer_info
         # return Defect_list_coordinate['25']
-        logger.info(Defect_list_coordinate)
-        return Sample_plan_coordinate, sample_edge, Defect_list_coordinate['02']
+        # return Sample_plan_coordinate, sample_edge, Defect_list_coordinate['02']
+        return wafer_info
 
     except Exception as e:
         logger.error(str(e))
@@ -145,8 +150,8 @@ def parser_klf(src_path, filename, logger):
 
 async def echo(websocket):
     mytest_path = os.path.join(os.path.expanduser('~'), 'Desktop\\code and test file\\test')
-    mysampling_coordinate ,mysamping_edge, mydefect_coordinate= detect_new_file(mytest_path)
-    # print (myresult.to_json(orient = 'index'))
+    # mysampling_coordinate ,mysamping_edge, mydefect_coordinate= detect_new_file(mytest_path)
+    myklarf_result,logger = detect_new_file(mytest_path)
     # dataframe to other format 
     # df = pd.DataFrame([['a', 'b'], ['c', 'd']],
     #   index=['row 1', 'row 2'],
@@ -180,16 +185,30 @@ async def echo(websocket):
     #  "data": [{"index": "row 1", "col 1": "a", "col 2": "b"},
     #  {"index": "row 2", "col 1": "c", "col 2": "d"}]}'
 
-    if (mysamping_edge is not None) and (mysampling_coordinate is not None) and (mydefect_coordinate is not None):    
+    # if (mysamping_edge is not None) and (mysampling_coordinate is not None) and (mydefect_coordinate is not None):    
+    #     send_data = dict()
+    #     sampling_coor_json = mysampling_coordinate.to_json(orient='records')
+    #     defect_coor_json = mydefect_coordinate.to_json(orient='records')
+    #     send_data['sampling_coor'] = sampling_coor_json
+    #     send_data['sampling_edge'] = mysamping_edge
+    #     send_data['defect_coor'] = defect_coor_json
+        # await websocket.send(json.dumps(send_data))
+    if(myklarf_result is not None):
         send_data = dict()
-        sampling_coor_json = mysampling_coordinate.to_json(orient='records')
-        defect_coor_json = mydefect_coordinate.to_json(orient='records')
-        send_data['sampling_coor'] = sampling_coor_json
-        send_data['sampling_edge'] = mysamping_edge
-        send_data['defect_coor'] = defect_coor_json
-        
-        await websocket.send(json.dumps(send_data))
-        # await websocket.send(json.dumps(mysamping_edge))
+        sampling_coord_json = myklarf_result['samplining_coordinate'].to_json(orient='records')
+        die_pitch_x = myklarf_result['Diepitch_x']
+        die_pitch_y = myklarf_result['Diepitch_y']
+        sample_edge = myklarf_result['sample_edge']
+
+        send_data['sampling_coord'] = sampling_coord_json
+        send_data['die_pitch_x'] = die_pitch_x
+        send_data['die_pitch_y'] = die_pitch_y
+        send_data['sampling_edge'] = sample_edge
+        for waferid,defect_coord in myklarf_result['defect_coordinate'].items():
+            send_data['waferID'] = waferid
+            send_data['defect_coord'] = defect_coord.to_json(orient='records')
+            await websocket.send(json.dumps(send_data))
+
 
 async def main():
     async with websockets.serve(echo, 'localhost', 8766) as websocket:
