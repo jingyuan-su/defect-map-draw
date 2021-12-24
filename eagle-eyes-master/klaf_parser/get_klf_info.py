@@ -134,8 +134,8 @@ def parser_klf(src_path, filename, logger):
 
         #return wafer_info
         # return Defect_list_coordinate['25']
-        # logger.info(type(Defect_list_coordinate['25']))
-        return Sample_plan_coordinate, sample_edge, Defect_list_coordinate['25']
+        logger.info(Defect_list_coordinate)
+        return Sample_plan_coordinate, sample_edge, Defect_list_coordinate['02']
 
     except Exception as e:
         logger.error(str(e))
