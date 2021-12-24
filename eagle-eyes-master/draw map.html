@@ -55,16 +55,15 @@
                         x_pixel = 2490/352.73;
                         y_pixel = 2260/352.73;
                         map.strokeRect(index_defx * x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
-                        map.save();
-                        map.translate(index_defx * x_pixel, index_defy * y_pixel - y_pixel * 2);
-                        console.log(index_defx * x_pixel);
+                        //map.save();
+                        map.strokeRect(index_defx * x_pixel + 4.96, index_defy * y_pixel + y_pixel - 1.43, 0.03, 0.02);
                         console.log(index_defy * y_pixel - y_pixel * 2);
                         // x size = 9.440000 um 0.03
                         // y size = 7.280000 um 0.02
                         // XREL = 1.7531200000e+03  4.96 pixel
                         // YREL = 5.0608000000e+02  1.434 pixel
-                        map.strokeRect(4.96, 1.43, 0.03, 0.02);
-                        map.restore();
+                        //map.strokeRect(4.96, 1.43, 0.03, 0.02);
+                        //map.restore();
                     }
                 }
         </script>
