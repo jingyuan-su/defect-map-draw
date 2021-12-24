@@ -46,8 +46,8 @@ def detect_new_file(src_path):
                     dir_name = os.path.split(os.path.split(root)[0])[-1]
                     logger.info("found klarf: " + filename)
                     logger.info('...in ' + dir_name)
-                    wafer_result, sampling_edge = parser_klf(root, filename, logger)
-                    return wafer_result, sampling_edge
+                    scan_sampling, sampling_edge, defect_sampling = parser_klf(root, filename, logger)
+                    return scan_sampling, sampling_edge, defect_sampling
     except Exception as e:
         logger.error(str(e))
         return None
@@ -132,7 +132,7 @@ def parser_klf(src_path, filename, logger):
 
         #return wafer_info
         # return Defect_list_coordinate['25']
-        return Sample_plan_coordinate, sample_edge
+        return Sample_plan_coordinate, sample_edge, Defect_list_coordinate
 
     except Exception as e:
         logger.error(str(e))
@@ -142,7 +142,7 @@ def parser_klf(src_path, filename, logger):
 
 async def echo(websocket):
     mytest_path = os.path.join(os.path.expanduser('~'), 'Desktop\\code and test file\\test')
-    mysampling_coordinate ,mysamping_edge= detect_new_file(mytest_path)
+    mysampling_coordinate ,mysamping_edge, defect_coordinate= detect_new_file(mytest_path)
     # print (myresult.to_json(orient = 'index'))
     # dataframe to other format 
     # df = pd.DataFrame([['a', 'b'], ['c', 'd']],
@@ -177,11 +177,13 @@ async def echo(websocket):
     #  "data": [{"index": "row 1", "col 1": "a", "col 2": "b"},
     #  {"index": "row 2", "col 1": "c", "col 2": "d"}]}'
 
-    if (mysamping_edge is not None) and (mysampling_coordinate is not None):    
+    if (mysamping_edge is not None) and (mysampling_coordinate is not None) and (defect_coordinate is not None):    
         send_data = dict()
         sampling_coor_json = mysampling_coordinate.to_json(orient='records')
+        defect_coordinate = 
         send_data['sampling_coor'] = sampling_coor_json
         send_data['sampling_edge'] = mysamping_edge
+        
         await websocket.send(json.dumps(send_data))
         # await websocket.send(json.dumps(mysamping_edge))
 
