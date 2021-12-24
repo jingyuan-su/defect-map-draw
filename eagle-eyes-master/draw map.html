@@ -36,6 +36,7 @@
                         var sampling_edge = raw_data['sampling_edge'];
                         var die_pitch_x = raw_data['die_pitch_x'];
                         var die_pitch_y = raw_data['die_pitch_y'];
+                        var wafer_id = raw_data['waferID'];
                     }
                     
                     canvas = document.getElementById("defectmap");
@@ -71,7 +72,7 @@
                                 map.restore();
                             }
                         }
-                        
+    
                         // x size = 9.440000 um 0.03
                         // y size = 7.280000 um 0.02
                         // XREL = 1.7531200000e+03  4.96 pixel
@@ -79,6 +80,7 @@
                         //map.strokeRect(4.96, 1.43, 0.03, 0.02);
                         //map.restore();
                     }
+                    console.log(wafer_id);
                 }
         </script>
     </body>
