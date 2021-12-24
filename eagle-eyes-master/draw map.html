@@ -55,8 +55,10 @@
                         //1 piexl = 352.73 um,convert to pixel from um for width and height
                         x_pixel = 2490/352.73;
                         y_pixel = 2260/352.73;
+                        //draw die pitch
                         map.strokeRect(index_defx * x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
                         //map.save();
+                        //draw defect point and for xREL and yREL
                         map.strokeRect(index_defx * x_pixel + 4.96, index_defy * y_pixel + y_pixel - 1.43, 0.03, 0.02);
                         console.log(index_defy * y_pixel - y_pixel * 2);
                         // x size = 9.440000 um 0.03
