@@ -31,12 +31,11 @@
                 function draw(mydata){
                     raw_data = JSON.parse(mydata);
                     for(var item in raw_data){
-                        // sampling_coord = JSON.parse(raw_data['sampling_coord']);
-                        // sampling_edge = JSON.parse(raw_data['sampling_edge']);
                         sampling_coord = JSON.parse(raw_data['sampling_coor']);
+                        defect_coord = JSON.parse(raw_data['defect_coor']);
                         sampling_edge = raw_data['sampling_edge'];
                     }
-
+                    
                     canvas = document.getElementById("defectmap");
                     var map = canvas.getContext("2d");
 
@@ -57,13 +56,20 @@
                         y_pixel = 2260/352.73;
                         //draw die pitch
                         map.strokeRect(index_defx * x_pixel, index_defy * y_pixel, x_pixel, y_pixel);
-                        //map.save();
+                        map.save();
                         //draw defect point
                         //x intra die defect position relative to the lower left corner of the die. For this
                         //to be meaningful, XINDEX and YINDEX fields must be used. The corresponding
                         //field in the DefectList will be a Float.
-                        map.strokeRect(index_defx * x_pixel + 4.96, index_defy * y_pixel + y_pixel - 1.43, 0.03, 0.02);
-                        console.log(index_defy * y_pixel - y_pixel * 2);
+                        for(var item_defect in Object.values(defect_coord)){
+                            if(defect_coord[item_defect]['XINDEX'] == sampling_coord[item]['x'] && defect_coord[item_defect]['YINDEX'] == sampling_coord[item]['y']){
+                                map.strokeStyle  = "#FF0000";
+                                map.lineWidth = 3
+                                map.strokeRect(index_defx * x_pixel + parseFloat(defect_coord[item_defect]['XREL'])/352.73, index_defy * y_pixel + y_pixel - parseFloat(defect_coord[item_defect]['YREL'])/352.73, 0.03, 0.02);
+                                map.restore();
+                            }
+                        }
+                        
                         // x size = 9.440000 um 0.03
                         // y size = 7.280000 um 0.02
                         // XREL = 1.7531200000e+03  4.96 pixel

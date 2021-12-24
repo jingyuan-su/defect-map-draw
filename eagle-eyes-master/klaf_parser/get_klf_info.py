@@ -88,6 +88,7 @@ def parser_klf(src_path, filename, logger):
         Sample_center_location = klf_batch_info_parser(klf_str, 'SampleCenterLocation', logger)
         Die_pitch = klf_batch_info_parser(klf_str, 'DiePitch', logger)
 
+        # return dataframe
         if 'SampleDieMap' in klf_str:
             key_str = 'SampleDieMap'
             Sample_plan_coordinate, sample_count = klf_sampling_coordinate_parser(klf_str, logger, key_str)
@@ -98,6 +99,7 @@ def parser_klf(src_path, filename, logger):
             Sample_plan_coordinate = None
             sample_count = None
 
+        # return dict{}
         Defect_list_coordinate = klf_defect_coordinate_parser(klf_str, logger, Wafer_Tiff_dict.keys())
 
         # noinspection PyUnresolvedReferences
@@ -132,7 +134,8 @@ def parser_klf(src_path, filename, logger):
 
         #return wafer_info
         # return Defect_list_coordinate['25']
-        return Sample_plan_coordinate, sample_edge, Defect_list_coordinate
+        # logger.info(type(Defect_list_coordinate['25']))
+        return Sample_plan_coordinate, sample_edge, Defect_list_coordinate['25']
 
     except Exception as e:
         logger.error(str(e))
@@ -142,7 +145,7 @@ def parser_klf(src_path, filename, logger):
 
 async def echo(websocket):
     mytest_path = os.path.join(os.path.expanduser('~'), 'Desktop\\code and test file\\test')
-    mysampling_coordinate ,mysamping_edge, defect_coordinate= detect_new_file(mytest_path)
+    mysampling_coordinate ,mysamping_edge, mydefect_coordinate= detect_new_file(mytest_path)
     # print (myresult.to_json(orient = 'index'))
     # dataframe to other format 
     # df = pd.DataFrame([['a', 'b'], ['c', 'd']],
@@ -177,12 +180,13 @@ async def echo(websocket):
     #  "data": [{"index": "row 1", "col 1": "a", "col 2": "b"},
     #  {"index": "row 2", "col 1": "c", "col 2": "d"}]}'
 
-    if (mysamping_edge is not None) and (mysampling_coordinate is not None) and (defect_coordinate is not None):    
+    if (mysamping_edge is not None) and (mysampling_coordinate is not None) and (mydefect_coordinate is not None):    
         send_data = dict()
         sampling_coor_json = mysampling_coordinate.to_json(orient='records')
-        defect_coordinate = 
+        defect_coor_json = mydefect_coordinate.to_json(orient='records')
         send_data['sampling_coor'] = sampling_coor_json
         send_data['sampling_edge'] = mysamping_edge
+        send_data['defect_coor'] = defect_coor_json
         
         await websocket.send(json.dumps(send_data))
         # await websocket.send(json.dumps(mysamping_edge))

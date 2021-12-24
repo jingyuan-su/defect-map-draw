@@ -171,7 +171,7 @@ def klf_defect_coordinate_parser(klf_str, logging, waferID_list):
                 coordinator_content = klf_str[coordinator_content_start:coordinator_content_end].strip().split('\n')
                 coordinator_content_result = [[x for x in ss.strip().split(' ')] for ss in coordinator_content]
                 # myarray = np.array(coordinator_content_result[:-1])
-                mydataframe_defect = pd.DataFrame(coordinator_content_result, columns=col_info)
+                mydataframe_defect = pd.DataFrame(coordinator_content_result, columns=col_info).astype(float)
                 # mydataframe_defect.set_index('DEFECTID', replace=False)
                 mydefect_coor_dic[mywaferid] = mydataframe_defect
                 # mydefect_coor_dic['def_xl'] = mydataframe_defect.loc[['x']].max()
