@@ -210,7 +210,6 @@ async def echo(websocket):
             await websocket.send(json.dumps(send_data))
 
 
-
 async def main():
     async with websockets.serve(echo, 'localhost', 8766) as websocket:
         await asyncio.Future()
