@@ -30,6 +30,7 @@
         <script>
                 function draw(mydata){
                     raw_data = JSON.parse(mydata);
+                    console.log(raw_data);
                     for(var item in raw_data){
                         var sampling_coord = JSON.parse(raw_data['sampling_coord']);
                         var defect_coord = JSON.parse(raw_data['defect_coord']);

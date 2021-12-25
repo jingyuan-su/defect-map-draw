@@ -207,6 +207,7 @@ async def echo(websocket):
         for waferid,defect_coord in myklarf_result['defect_coordinate'].items():
             send_data['waferID'] = waferid
             send_data['defect_coord'] = defect_coord.to_json(orient='records')
+            logger.info(waferid)
             await websocket.send(json.dumps(send_data))
 
 
