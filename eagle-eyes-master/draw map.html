@@ -43,13 +43,14 @@
                     canvas = document.getElementById("defectmap");
                     var map = canvas.getContext("2d");
 
-                    // map.beginPath();
-                    // map.arc(200, 200, 200, -Math.PI, Math.PI, false);
-                    // map.closePath();
-                    // map.stroke();
-
                     map.translate(100, 100);
                     map.lineWidth = 0.05;
+
+
+                    // map.beginPath();
+                    // map.arc(100, 100, 100, -Math.PI, Math.PI, false);
+                    // map.closePath();
+                    // map.stroke();
 
                     for (var item in Object.values(sampling_coord)){
                         // console.log(typeof(sampling_coord[item]));
