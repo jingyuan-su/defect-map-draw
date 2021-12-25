@@ -69,7 +69,7 @@
                         for(var item_defect in Object.values(defect_coord)){
                             if(defect_coord[item_defect]['XINDEX'] == sampling_coord[item]['x'] && defect_coord[item_defect]['YINDEX'] == sampling_coord[item]['y']){
                                 map.strokeStyle  = "#FF0000";
-                                map.lineWidth = 3
+                                map.lineWidth = 2
                                 map.strokeRect(index_defx * x_pixel + parseFloat(defect_coord[item_defect]['XREL'])/352.73, index_defy * y_pixel + y_pixel - parseFloat(defect_coord[item_defect]['YREL'])/352.73, 0.03, 0.02);
                                 map.restore();
                             }
