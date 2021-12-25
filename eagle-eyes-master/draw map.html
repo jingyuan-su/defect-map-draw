@@ -26,7 +26,7 @@
         </script>
     </head>
     <body>
-        <canvas id = "defectmap" width = "1000" height = "1000"></canvas>
+        <canvas id = "defectmap" width = "550" height = "550" style="background-color:white;"></canvas>
         <script>
                 function draw(mydata){
                     raw_data = JSON.parse(mydata);
@@ -43,7 +43,7 @@
                     canvas = document.getElementById("defectmap");
                     var map = canvas.getContext("2d");
 
-                    map.translate(100, 100);
+                    map.translate(0, 0);
                     map.lineWidth = 0.05;
 
 
