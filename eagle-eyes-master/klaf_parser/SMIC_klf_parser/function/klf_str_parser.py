@@ -203,7 +203,7 @@ def klf_sampling_coordinate_parser(klf_str, logging, key_str):
         coordinator_content = klf_str[col_info_start:col_info_end].strip().split('\n')
         sample_count = coordinator_content.pop(0)
         coordinator_content_result = [[x for x in ss.strip().split(' ') if len(x) > 0] for ss in coordinator_content]
-        mydataframe_sampling = pd.DataFrame(coordinator_content_result, columns=['x', 'y']).astype(int)
+        mydataframe_sampling = pd.DataFrame(coordinator_content_result, columns=['x', 'y']).astype(float)
         # mydataframe_sampling.loc[:,'x'] = mydataframe_sampling['x'].str.astype('int32')
         # mydataframe_sampling.loc[:'y'] = mydataframe_sampling['y'].str.astype('int32')
         def_xl = mydataframe_sampling['x'].min()
