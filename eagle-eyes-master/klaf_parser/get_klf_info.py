@@ -73,15 +73,16 @@ def parser_klf(src_path, filename, logger):
 
         FileTimestamp = klf_timestamp_parser(klf_str, logger)
         LotID_str = find_klf_str_keyword_connect_result(klf_str, 'LotID', logger)[-1]
-
-        if 'DeviceID' in klf_str:
-            DeviceID_str = find_klf_str_keyword_connect_result(klf_str, 'DeviceID', logger)[-1]
-        else:
-            DeviceID_str = None
-
         SetupID_str = find_klf_str_keyword_connect_result(klf_str, 'SetupID ', logger)[-3]
         # get tool info
         Tool_ID, Tool_model, Tool_Vendor = klf_tool_parser(klf_str, logger)
+
+        if 'KLA' in Tool_ID:
+            recipe_str = find_klf_str_keyword_connect_result(klf_str, 'SetupID', logger)[-3]
+        else:
+            recipe_str = SetupID_str + '_' + find_klf_str_keyword_connect_result(klf_str, 'StepID', logger)[-1]
+
+
         # get wafer no & image list
         Wafer_Tiff_dict = klf_waferid_and_img(klf_str, logger)
         # get notch direction
@@ -105,27 +106,27 @@ def parser_klf(src_path, filename, logger):
         Defect_list_coordinate = klf_defect_coordinate_parser(klf_str, logger, Wafer_Tiff_dict.keys())
 
         # noinspection PyUnresolvedReferences
-        # logger.info('FileTimestamp: %s' % FileTimestamp)
-        # logger.info('LotID: %s' % LotID_str)
-        # logger.info('Tool_ID: %s' % Tool_ID)
-        # logger.info('Tool_model: %s' % Tool_model)
-        # logger.info('Tool_Vendor: %s' % Tool_Vendor)
-        # logger.info('DeviceID: %s' % DeviceID_str)
-        # logger.info('Setupid: %s' % SetupID_str)
-        # logger.info('Notch direction: %s' % Wafer_notch_direction)
-        # logger.info('SampleCenterLocation: %s' % Sample_center_location)
-        # logger.info('DiePitch: %s' % Die_pitch)
-        # logger.info('scan sampling die count: %s' % sample_count)
-        # logger.info('SamplinTestPlan: %s' % Sample_plan_coordinate)
-        # logger.info('Wafer_Tiff: %s' % Wafer_Tiff_dict)
-        # logger.info('defect coordinate: %s' % Defect_list_coordinate)
+        logger.info('FileTimestamp: %s' % FileTimestamp)
+        logger.info('LotID: %s' % LotID_str)
+        logger.info('Tool_ID: %s' % Tool_ID)
+        logger.info('Tool_model: %s' % Tool_model)
+        logger.info('Tool_Vendor: %s' % Tool_Vendor)
+        logger.info('Setupid: %s' % SetupID_str)
+        logger.info('Recipe: %s' % recipe_str)
+        logger.info('Notch direction: %s' % Wafer_notch_direction)
+        logger.info('SampleCenterLocation: %s' % Sample_center_location)
+        logger.info('DiePitch: %s' % Die_pitch)
+        logger.info('scan sampling die count: %s' % sample_count)
+        logger.info('SamplinTestPlan: %s' % Sample_plan_coordinate)
+        logger.info('Wafer_Tiff: %s' % Wafer_Tiff_dict)
+        logger.info('defect coordinate: %s' % Defect_list_coordinate)
 
         wafer_info['lotid'] = LotID_str
         wafer_info['Tool_ID'] = Tool_ID
         wafer_info['Tool_model'] = Tool_model
         wafer_info['Tool_vendor'] = Tool_Vendor
-        wafer_info['DeviceID'] = DeviceID_str
         wafer_info['Setupid'] = SetupID_str
+        wafer_info['Recipe'] = recipe_str
         wafer_info['Notch_direction'] = Wafer_notch_direction
         wafer_info['SampleCenter'] = Sample_center_location
         wafer_info['Diepitch_x'] = float(Die_pitch.strip().split(' ')[0])
@@ -204,16 +205,19 @@ async def echo(websocket):
         send_data['die_pitch_x'] = die_pitch_x
         send_data['die_pitch_y'] = die_pitch_y
         send_data['sampling_edge'] = sample_edge
+        send_data['lotid'] = myklarf_result['lotid']
+        send_data['Recipe'] = myklarf_result['Recipe']
+        send_data['Tool_ID'] = myklarf_result['Tool_ID']
+
 
         for waferid,defect_coord in myklarf_result['defect_coordinate'].items():
             send_data['waferID'] = str(waferid)
             send_data['defect_coord'] = defect_coord.to_json(orient='records')
-            logger.info(waferid)
             await websocket.send(json.dumps(send_data))
 
 
 async def main():
-    async with websockets.serve(echo, 'localhost', 8766) as websocket:
+    async with websockets.serve(echo, 'localhost', 8765) as websocket:
         await asyncio.Future()
 
 

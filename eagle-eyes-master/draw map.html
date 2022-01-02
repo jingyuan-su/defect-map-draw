@@ -3,7 +3,7 @@
     <head>
         <script type="text/javascript">
             window.onload = function(){
-                var connection = new WebSocket("ws://localhost:8766/");
+                var connection = new WebSocket("ws://localhost:8765/");
                 console.log("start");
                 connection.onopen = function(){
                     connection.send("pls send me data");
@@ -11,6 +11,7 @@
 
                 connection.onmessage = function(event){
                     var received_data = event.data || Window.event.data;
+                    var a = document.createElement("a");
                     draw(received_data);
                     connection.close();
                 };
@@ -30,7 +31,6 @@
         <script>
                 function draw(mydata){
                     raw_data = JSON.parse(mydata);
-                    console.log(raw_data);
                     for(var item in raw_data){
                         var sampling_coord = JSON.parse(raw_data['sampling_coord']);
                         var defect_coord = JSON.parse(raw_data['defect_coord']);
@@ -38,8 +38,11 @@
                         var die_pitch_x = raw_data['die_pitch_x'];
                         var die_pitch_y = raw_data['die_pitch_y'];
                         var wafer_id = raw_data['waferID'];
+                        var recipe_id = raw_data['Recipe'];
+                        var lotid = raw_data['lotid'];
+                        var tool_id = raw_data['Tool_ID'];
                     }
-                    
+
                     canvas = document.getElementById("defectmap");
                     var map = canvas.getContext("2d");
 
@@ -82,7 +85,14 @@
                         //map.strokeRect(4.96, 1.43, 0.03, 0.02);
                         //map.restore();
                     }
-                    console.log(wafer_id);
+
+                    var map_image = new Image();
+                    map_image.src =  canvas.toDataURL("image/png");
+                    var map_link = document.createElement("a");
+                    map_link.src = map_image;
+                    map_link.href = map_image.src;
+                    map_link.download = lotid + "-" + tool_id + "-" + recipe_id +"-"+ wafer_id;
+                    map_link.click();
                 }
         </script>
     </body>
