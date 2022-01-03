@@ -41,7 +41,7 @@ And this KLARF file should be help for EDA software to draw or create the visual
   ClassLookup 276
 
 - **Visual Defect map**. After KLARF file parser the result should be like this:
-<img src="extra/images/logo.png" width=200 height=200/>
+<img src="result/HJU008-HYCPS04-03R3_IMD2_SRO-25.png" width=200 height=200/>
 
 - **Websockets using**. python should be backend for KLARF file parser and JS should be map printer!
 
