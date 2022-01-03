@@ -106,20 +106,20 @@ def parser_klf(src_path, filename, logger):
         Defect_list_coordinate = klf_defect_coordinate_parser(klf_str, logger, Wafer_Tiff_dict.keys())
 
         # noinspection PyUnresolvedReferences
-        logger.info('FileTimestamp: %s' % FileTimestamp)
-        logger.info('LotID: %s' % LotID_str)
-        logger.info('Tool_ID: %s' % Tool_ID)
-        logger.info('Tool_model: %s' % Tool_model)
-        logger.info('Tool_Vendor: %s' % Tool_Vendor)
-        logger.info('Setupid: %s' % SetupID_str)
-        logger.info('Recipe: %s' % recipe_str)
-        logger.info('Notch direction: %s' % Wafer_notch_direction)
-        logger.info('SampleCenterLocation: %s' % Sample_center_location)
-        logger.info('DiePitch: %s' % Die_pitch)
-        logger.info('scan sampling die count: %s' % sample_count)
-        logger.info('SamplinTestPlan: %s' % Sample_plan_coordinate)
-        logger.info('Wafer_Tiff: %s' % Wafer_Tiff_dict)
-        logger.info('defect coordinate: %s' % Defect_list_coordinate)
+        # logger.info('FileTimestamp: %s' % FileTimestamp)
+        # logger.info('LotID: %s' % LotID_str)
+        # logger.info('Tool_ID: %s' % Tool_ID)
+        # logger.info('Tool_model: %s' % Tool_model)
+        # logger.info('Tool_Vendor: %s' % Tool_Vendor)
+        # logger.info('Setupid: %s' % SetupID_str)
+        # logger.info('Recipe: %s' % recipe_str)
+        # logger.info('Notch direction: %s' % Wafer_notch_direction)
+        # logger.info('SampleCenterLocation: %s' % Sample_center_location)
+        # logger.info('DiePitch: %s' % Die_pitch)
+        # logger.info('scan sampling die count: %s' % sample_count)
+        # logger.info('SamplinTestPlan: %s' % Sample_plan_coordinate)
+        # logger.info('Wafer_Tiff: %s' % Wafer_Tiff_dict)
+        # logger.info('defect coordinate: %s' % Defect_list_coordinate)
 
         wafer_info['lotid'] = LotID_str
         wafer_info['Tool_ID'] = Tool_ID
@@ -209,10 +209,11 @@ async def echo(websocket):
         send_data['Recipe'] = myklarf_result['Recipe']
         send_data['Tool_ID'] = myklarf_result['Tool_ID']
 
-
         for waferid,defect_coord in myklarf_result['defect_coordinate'].items():
             send_data['waferID'] = str(waferid)
             send_data['defect_coord'] = defect_coord.to_json(orient='records')
+            # logger.info(waferid)
+            # logger.info(defect_coord)
             await websocket.send(json.dumps(send_data))
 
 

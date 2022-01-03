@@ -161,12 +161,13 @@ def klf_defect_coordinate_parser(klf_str, logging, waferID_list):
         mydefect_coor_dic = {}
 
         # AIT是多个wafer defect坐标在一份klarf里
-        if len(waferID_list) == klf_str.count('DefectList'):
+        if len(waferID_list) == klf_str.count('DefectRecordSpec'):
 
             # for i in range(klf_str.count('DefectList')):
+            str_start = 0
             for mywaferid in waferID_list:
                 # coordinator content
-                coordinator_content_start = klf_str.find('DefectList', 0) + len('DefectList')
+                coordinator_content_start = klf_str.find('DefectList', str_start) + len('DefectList')
                 coordinator_content_end = klf_str.find(';', coordinator_content_start)
                 coordinator_content = klf_str[coordinator_content_start:coordinator_content_end].strip().split('\n')
                 coordinator_content_result = [[x for x in ss.strip().split(' ')] for ss in coordinator_content]
@@ -175,6 +176,7 @@ def klf_defect_coordinate_parser(klf_str, logging, waferID_list):
                 # mydataframe_defect.set_index('DEFECTID', replace=False)
                 mydefect_coor_dic[mywaferid] = mydataframe_defect
                 # mydefect_coor_dic['def_xl'] = mydataframe_defect.loc[['x']].max()
+                str_start = coordinator_content_end
         return mydefect_coor_dic
 
     except Exception as e:

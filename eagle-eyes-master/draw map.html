@@ -11,9 +11,8 @@
 
                 connection.onmessage = function(event){
                     var received_data = event.data || Window.event.data;
-                    var a = document.createElement("a");
                     draw(received_data);
-                    connection.close();
+                    // connection.close();
                 };
 
                 connection.onclose = function(event){
@@ -93,6 +92,7 @@
                     map_link.href = map_image.src;
                     map_link.download = lotid + "-" + tool_id + "-" + recipe_id +"-"+ wafer_id;
                     map_link.click();
+                    map.clearRect(0, 0, 550, 550);
                 }
         </script>
     </body>
