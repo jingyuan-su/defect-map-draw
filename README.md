@@ -22,24 +22,25 @@ Feel free to begin converting this function into your project. But first, a few 
 > Came from Semicondutor defect scanning tool's output file for server parsing or others just like that.There's sorts of parameters to indicate the wafer which was scan is good or NG for defect performance.
 And this KLARF file should be help for EDA software to draw or create the visual defect scaned map.
 
-> - FileVersion 1 1;
-  - FileTimestamp 10-19-21 10:06:32;
-  - InspectionStationID "AMAT" "COMPLUS 3T" "HYCPS04";
-  - SampleType WAFER;
-  ResultTimestamp 10-19-21 10:04:09;
-  LotID "HJU008";
-  SampleSize 1 200;
-  SetupID "03R3" 10-19-21 10:03:42;
-  StepID "IMD2_SRO";
-  SampleOrientationMarkType NOTCH;
-  OrientationMarkLocation DOWN;
-  DiePitch 2.4899600000e+03 2.2599200000e+03;
-  DieOrigin 0.000000 0.000000;
-  WaferID "25";
-  Slot 25;
-  SampleCenterLocation 2.3948000000e+03 2.0903200000e+03;
-  ClassLookup 276
-
+```
+    FileVersion 1 1;
+    FileTimestamp 10-19-21 10:06:32;
+    InspectionStationID "AMAT" "COMPLUS 3T" "HYCPS04";
+    SampleType WAFER;
+    ResultTimestamp 10-19-21 10:04:09;
+    LotID "HJU008";
+    SampleSize 1 200;
+    SetupID "03R3" 10-19-21 10:03:42;
+    StepID "IMD2_SRO";
+    SampleOrientationMarkType NOTCH;
+    OrientationMarkLocation DOWN;
+    DiePitch 2.4899600000e+03 2.2599200000e+03;
+    DieOrigin 0.000000 0.000000;
+    WaferID "25";
+    Slot 25;
+    SampleCenterLocation 2.3948000000e+03 2.0903200000e+03;
+    ClassLookup 276
+```
 - **Visual Defect map**. After KLARF file parser the result should be like this:
 <img src="result/HJU008-HYCPS04-03R3_IMD2_SRO-25.png" width=200 height=200/>
 
