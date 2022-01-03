@@ -22,10 +22,10 @@ Feel free to begin converting this function into your project. But first, a few 
 > Came from Semicondutor defect scanning tool's output file for server parsing or others just like that.There's sorts of parameters to indicate the wafer which was scan is good or NG for defect performance.
 And this KLARF file should be help for EDA software to draw or create the visual defect scaned map.
 
-> FileVersion 1 1;
-  FileTimestamp 10-19-21 10:06:32;
-  InspectionStationID "AMAT" "COMPLUS 3T" "HYCPS04";
-  SampleType WAFER;
+> - FileVersion 1 1;
+  - FileTimestamp 10-19-21 10:06:32;
+  - InspectionStationID "AMAT" "COMPLUS 3T" "HYCPS04";
+  - SampleType WAFER;
   ResultTimestamp 10-19-21 10:04:09;
   LotID "HJU008";
   SampleSize 1 200;
