@@ -150,7 +150,7 @@ def parser_klf(src_path, filename, logger):
         pass
 
 async def echo(websocket):
-    mytest_path = os.path.join(os.path.expanduser('~'), 'Desktop\\code and test file\\test')
+    mytest_path = os.path.join(os.path.expanduser('~'), 'Desktop\\test file')
     # mysampling_coordinate ,mysamping_edge, mydefect_coordinate= detect_new_file(mytest_path)
     myklarf_result,logger = detect_new_file(mytest_path)
     # dataframe to other format 
