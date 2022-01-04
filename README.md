@@ -4,14 +4,14 @@ I'm exploring the function to auto parsing KLARF file from defect scan tool to w
 
 ### Project structure
 
-I have moved all [the original BASIC source code](https://github.com/jingyuan-su/defect-map-draw.git) into a folder for. Note that AI image classification is very important for each everywhere:
+I have moved all [defect map draw](https://github.com/jingyuan-su/defect-map-draw.git) into a folder. Note that AI image classification is very important for each everywhere:
 
-> Even in the semiconductor, it's more important for us,for all of your section or department to work instead of engineers manual handle. Such as worse or special map distinguish or using for search.
+> Even in the semiconductor, it's more important for us,it can instead of engineers' manual handle in your working section or department. Such as worse or special map distinguish or previous case search.
 This project has subfolders corresponding to the languages:
 
-- Python
+- Python 3.5 above
 - JavaScript
-- HTML
+- HTML5
 
 ### Project goals
 
